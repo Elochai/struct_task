@@ -3,9 +3,11 @@ class Factory
   def initialize(*args)
     Customer.class_eval do
       define_method "initialize" do |*elems|
-      	args.each do |arg|
-      	  elems.each do |elem|
-      	  self.public_send("#{arg}=",elem)
+      	args.each_with_index do |arg,index|
+      	  elems.each_with_index do |elem, index2|
+      	  	if index2 == index
+      	  self.public_send("#{arg}=",elem[index2])
+      	end
       	end
         end
 	  end
