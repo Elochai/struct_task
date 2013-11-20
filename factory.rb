@@ -15,11 +15,11 @@ def initialize(*args)
             self.public_send(arg)
           end
         rescue
-          puts "Invalid argument"
+          raise "Invalid argument"
         end
       end
       define_method "greeting" do
-        puts "Hello, " + self.public_send("#{args[0]}") + '!'
+        "Hello, " + self.public_send("#{args[0]}") + '!'
       end
       args.each do |arg|
         attr_accessor arg.to_sym    
@@ -35,7 +35,7 @@ end
  
 
 Сustomer = Factory.new(:name, :address, :zip)
-Customer.new("Joe", "Maple st.", 12345).greeting
+puts Customer.new("Joe", "Maple st.", 12345).greeting
 joe = Customer.new("Joe", "Maple st.", 12345)
 puts joe[:name]
 puts joe["address"]
