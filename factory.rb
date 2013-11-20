@@ -33,5 +33,7 @@ end
 
 Сustomer = Factory.new(:name, :address, :zip)
 joe = Customer.new("Joe", "Maple st.", 12345)
-puts joe[3]
+puts joe[:name]
+puts joe["address"]
+puts joe[2]
 
