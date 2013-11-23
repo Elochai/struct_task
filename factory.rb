@@ -1,6 +1,6 @@
 class Factory 
 
-def initialize(*args)
+  def initialize(*args, &block)
     Customer.class_eval do
       define_method "initialize" do |*elems|
         elems.each_with_index do |elem, index|
@@ -18,12 +18,10 @@ def initialize(*args)
           raise "Invalid argument"
         end
       end
-      define_method "greeting" do
-        "Hello, " + self.public_send("#{args[0]}") + '!'
-      end
       args.each do |arg|
         attr_accessor arg.to_sym    
       end
+    class_eval(&block) if block_given?
     end
   end
 
@@ -34,8 +32,12 @@ class Customer
 end
  
 
-Сustomer = Factory.new(:name, :address, :zip)
-puts Customer.new("Joe", "Maple st.", 12345).greeting
+Сustomer = Factory.new(:name, :address, :zip) do
+  def greeting
+    puts "Hello, #{name}!"
+  end
+end
+Customer.new("Joe", "Maple st.", 12345).greeting
 joe = Customer.new("Joe", "Maple st.", 12345)
 puts joe[:name]
 puts joe["address"]
